@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday!</title>
+  <style>
+    body {
+      background: #ffe6f2;
+      text-align: center;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+    }
+    .photo {
+      margin-top: 15px;
+      border-radius: 50%;
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      box-shadow: 0 0 30px #ff99cc;
+      border: 5px solid #fff;
+      z-index: 1;
+      position: relative;
+    }
+    .wish {
+      font-size: 2.5rem;
+      color: #ff3399;
+      margin-top: 30px;
+      font-weight: bold;
+      text-shadow: 2px 2px 8px #fff;
+      animation: pop 1s infinite alternate;
+      z-index: 1;
+      position: relative;
+      text-align: center;
+    }
+    @keyframes pop {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.05); }
+    }
+    canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .msssg {
+      color: rgb(214, 0, 36);
+      font-size: 20px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="confetti"></canvas>
+  <canvas id="flowers"></canvas>
+  <img src="budi.jpeg" title="SarSwati KuNwar🌹"  alt="Birthday Person" class="photo" >
+  <div class="wish">Happy Birthday,mutu🫀❤️‍🩹</div>
+  <div class="msssg">
+     <!-- जन्मदिनको धेरै धेरै शुभकामना बुदी!<br>
+  तिमी मेरो जीवनको सबैभन्दा प्यारो साथी हौ,<br>
+  तिमी बिना मेरो संसार अधुरो छ।<br>
+  सधैं हाँसीरह, खुशी रह, अनि माया गरिरह।<br>
+  आजको दिन तिमीलाई धेरै माया, खुशी र सफलता मिलोस्।<br>
+  Happy Birthday, मेरो बुदी! ❤️🎂 -->
+    प्रिये, तिम्रो जन्मदिनमा मेरो मुटुको गहिरो माया र शुभकामना!❤️‍🩹 <br>
+    तिमी मेरो जीवनको चन्द्रमाजस्तै हौ, हरेक रातमा उज्यालो छर्ने।😊<br>
+    तिम्रो हाँसो मेरो लागि सबैभन्दा सुन्दर संगीत हो, र तिम्रो खुशी मेरो लागि सबैभन्दा ठूलो उपहार।🌹<br>
+    तिम्रो साथ पाउनु भनेको म भाग्यमानी हो|🙂<br>
+    तिमिले चाहेका हरेक पाइला सगरमाथा को सिखर चुमना सफल हुन्|❤️‍🩹<br>
+    तिम्रो जिबन मा कहिले दुख कस्ट आई नपरोस ,येदि आईपरेपनि भगवानद्वारा सक्ति प्रदान होस्|💞  <br>
+    तिमीलाई जन्मदिनको धेरै धेरै शुभकामना माया ❤️🎂🌑<br>
+
+  </div>
+  <script>
+    // Confetti animation
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+    let W = window.innerWidth, H = window.innerHeight;
+    canvas.width = W; canvas.height = H;
+
+    const confetti = [];
+    for(let i=0; i<100; i++) {
+      confetti.push({
+        x: Math.random()*W,
+        y: Math.random()*H,
+        r: Math.random()*8+4,
+        d: Math.random()*Math.PI*2,
+        color: `hsl(${Math.random()*360},80%,60%)`,
+        speed: Math.random()*2+1
+      });
+    }
+
+    function drawConfetti() {
+      ctx.clearRect(0,0,W,H);
+      confetti.forEach(c=>{
+        ctx.beginPath();
+        ctx.arc(c.x, c.y, c.r, 0, 2*Math.PI);
+        ctx.fillStyle = c.color;
+        ctx.fill();
+        c.y += c.speed;
+        c.x += Math.sin(c.d)*2;
+        if(c.y > H) c.y = -10;
+        if(c.x > W) c.x = 0;
+        if(c.x < 0) c.x = W;
+      });
+      requestAnimationFrame(drawConfetti);
+    }
+    drawConfetti();
+
+    // Flower animation
+    const flowersCanvas = document.getElementById('flowers');
+    const flowersCtx = flowersCanvas.getContext('2d');
+    flowersCanvas.width = W; flowersCanvas.height = H;
+
+    const flowerEmojis = ["🌸","🌺","🌻","🌼","♥️","🎇","🥀","n♥️s","happy happy 😊","♥️S","🎉","🫶"];
+    const flowers = [];
+    for(let i=0; i<30; i++) {
+      flowers.push({
+        x: Math.random()*W,
+        y: Math.random()*H,
+        size: Math.random()*32+24,
+        emoji: flowerEmojis[Math.floor(Math.random()*flowerEmojis.length)],
+        speed: Math.random()*1+0.5,
+        sway: Math.random()*2+0.5,
+        angle: Math.random()*Math.PI*2
+      });
+    }
+
+    function drawFlowers() {
+      flowersCtx.clearRect(0,0,W,H);
+      flowers.forEach(f=>{
+        flowersCtx.font = `${f.size}px serif`;
+        flowersCtx.globalAlpha = 0.85;
+        flowersCtx.fillText(f.emoji, f.x + Math.sin(f.angle)*10, f.y);
+        f.y += f.speed;
+        f.angle += 0.02;
+        if(f.y > H) {
+          f.y = -40;
+          f.x = Math.random()*W;
+        }
+      });
+      requestAnimationFrame(drawFlowers);
+    }
+    drawFlowers();
+
+    // Spray (party popper) animation at start
+    const sprayCanvas = document.createElement('canvas');
+    sprayCanvas.width = W; sprayCanvas.height = H;
+    sprayCanvas.style.position = "fixed";
+    sprayCanvas.style.top = "0";
+    sprayCanvas.style.left = "0";
+    sprayCanvas.style.width = "100vw";
+    sprayCanvas.style.height = "100vh";
+    sprayCanvas.style.pointerEvents = "none";
+    sprayCanvas.style.zIndex = "2";
+    document.body.appendChild(sprayCanvas);
+
+    const sprayCtx = sprayCanvas.getContext('2d');
+    // const sprayEmojis = ["🎉","🎇","✨"];
+    // const sprays = [];
+
+    // // Top-left spray
+    // for(let i=0; i<25; i++) {
+    //   sprays.push({
+    //     x: 40,
+    //     y: 40,
+    //     vx: Math.cos(Math.PI/4 + Math.random()*Math.PI/2)* (Math.random()*6+4),
+    //     vy: Math.sin(Math.PI/4 + Math.random()*Math.PI/2)* (Math.random()*6+4),
+    //     emoji: sprayEmojis[Math.floor(Math.random()*sprayEmojis.length)],
+    //     size: Math.random()*32+24,
+    //     alpha: 1
+    //   });
+    // }
+    // Top-right spray
+    for(let i=0; i<25; i++) {
+      sprays.push({
+        x: W-40,
+        y: 40,
+        vx: -Math.cos(Math.PI/4 + Math.random()*Math.PI/2)* (Math.random()*6+4),
+        vy: Math.sin(Math.PI/4 + Math.random()*Math.PI/2)* (Math.random()*6+4),
+        emoji: sprayEmojis[Math.floor(Math.random()*sprayEmojis.length)],
+        size: Math.random()*32+24,
+        alpha: 1
+      });
+    }
+
+    function drawSpray() {
+      sprayCtx.clearRect(0,0,W,H);
+      sprays.forEach(s=>{
+        sprayCtx.globalAlpha = s.alpha;
+        sprayCtx.font = `${s.size}px serif`;
+        sprayCtx.fillText(s.emoji, s.x, s.y);
+        s.x += s.vx;
+        s.y += s.vy;
+        s.vy += 0.15; // gravity
+        s.alpha -= 0.012;
+      });
+    }
+    let sprayFrames = 0;
+    function animateSpray() {
+      if (sprayFrames < 90) { // show for ~1.5 seconds
+        drawSpray();
+        sprayFrames++;
+        requestAnimationFrame(animateSpray);
+      } else {
+        sprayCanvas.remove();
+      }
+    }
+    animateSpray();
+
+    // Responsive resize
+    window.addEventListener('resize', ()=>{
+      W = window.innerWidth; H = window.innerHeight;
+      canvas.width = W; canvas.height = H;
+      flowersCanvas.width = W; flowersCanvas.height = H;
+      sprayCanvas.width = W; sprayCanvas.height = H;
+    });
+  </script>
+</body>
+</html>
